@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="text" id="TenSan">
+<input type="button" value="Add" onclick="Add()">
+<input type="text" id="Edit">
+<input type="button" value="Edit" id='Sua' onclick="Sua(this)">
+<p id="table"></p>
+<script>
+    var array = [];
+    var id = 0;
+    let name = document.getElementById('TenSan').value;
+
+    function Add() {
+        name = document.getElementById('TenSan').value;
+        array.push(name);
+        id++;
+        HienThi();
+    }
+
+    function HienThi() {
+        var data = '';
+        data = '<table width="400px">';
+        data+='<th style="text-align: left;">Product Name</th>';
+        data+='<th style="text-align: right; color:brown" colspan="2"><p id="counter">'+array.length+'</p></th>';
+        for (var i = 0; i < array.length; i++) {
+            if (i % 2 == 0) {
+                data += '<tr  style=" background-color: lightgrey;"><td>' + array[i] + '</td><td><input type="button" value="Edit" onclick="Edit(' + i + ')"></td><td><input type="button" value="Delete" onclick="Delete(' + i + ')"></td></tr>';
+            } else {
+                data += '<tr><td>' + array[i] + '</td><td><input type="button" value="Edit" onclick="Edit(' + i + ')"></td><td><input type="button" value="Delete" onclick="Delete(' + i + ')"></td></tr>';
+            }
+        }
+        data += '</table>';
+        document.getElementById('table').innerHTML = data;
+    }
+
+    function Edit(i) {
+        document.getElementById('Edit').value = array[i];
+        document.getElementById('Sua').id = i;
+    }
+
+    function Sua(obj) {
+        array[obj.id] = document.getElementById('Edit').value;
+        document.getElementById(obj.id).id = 'Sua';
+        HienThi();
+    }
+    function Delete(id)
+    {
+        for(var i=id;i<array.length-1;i++)
+        {
+            var temp=array[i];
+            array[i]=array[i+1]
+            array[i+1]=temp;
+        }
+        array.pop();
+        HienThi();
+    }
+
+</script>
+</body>
+</html>
